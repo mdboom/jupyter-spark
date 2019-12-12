@@ -1,8 +1,8 @@
 import json
 
-import tornado.web
 from notebook.base.handlers import IPythonHandler
 from tornado import httpclient
+import asyncio 
 
 
 class SparkHandler(IPythonHandler):
@@ -10,8 +10,7 @@ class SparkHandler(IPythonHandler):
     def initialize(self, spark):
         self.spark = spark
 
-    @tornado.web.asynchronous
-    def get(self):
+    async def get(self):
         """
         Fetch the requested URI from the Spark API, replace the
         URLs in the response content for HTML responses or return
@@ -21,6 +20,15 @@ class SparkHandler(IPythonHandler):
         url = self.spark.backend_url(self.request)
         self.spark.log.debug('Fetching from Spark %s', url)
         http.fetch(url, self.handle_response)
+        try:
+            response = await http.fetch(url)
+        except Exception as e:
+            print("Spark Notebook Extension Error", e)
+        else:
+            self.handle_response(response)
+
+
+
 
     def handle_response(self, response):
         if response.error:
