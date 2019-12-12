@@ -15,9 +15,9 @@ setup(
     include_package_data=True,
     license='MPL2',
     install_requires=[
-        'ipython >= 4',
+        'ipython >= 7',
         'jupyter',
-        'notebook >= 4.2',
+        'notebook >= 6',
         'beautifulsoup4',
         'widgetsnbextension',
     ],

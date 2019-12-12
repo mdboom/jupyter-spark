@@ -12,7 +12,7 @@ const plugin = {
     id: 'jupyter_spark',
     autoStart: true,
     activate: (app) => {
-        let api_url = app.serviceManager.serverSettings.baseUrl + "/../spark/api/v1";
+        let api_url = app.serviceManager.serverSettings.baseUrl + "spark/api/v1";
         let widget = new Widget();
         widget.id = 'jupyter-spark';
         widget.class = 'jupter-spark-panel';
@@ -31,7 +31,7 @@ const plugin = {
         div.id = "spark_dialog_contents";
         widget.node.appendChild(div);
 
-        app.shell.addToLeftArea(widget);
+        app.shell.add(widget, 'left', {rank: 1000});
     }
 };
 
